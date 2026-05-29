@@ -334,15 +334,15 @@ def main() -> None:
     print("Mengekstrak teks...")
     lines = extract_raw_lines(pdf_bytes)
     out_dir = OUT_BASE / REG_ID
-out_dir.mkdir(
+    out_dir.mkdir(
     parents=True,
     exist_ok=True,
-)
+    )
 
-(out_dir / "_debug_raw_lines.txt").write_text(
+    (out_dir / "_debug_raw_lines.txt").write_text(
     "\n".join(lines),
     encoding="utf-8",
-)
+    )
     print(f"  {len(lines)} baris terdeteksi")
 
     # Parse struktur
@@ -355,7 +355,7 @@ out_dir.mkdir(
     parse_regulasi(lines, reg)
     nomor_pasal: list[int] = []
 
-for p in reg.pasal_list:
+    for p in reg.pasal_list:
     try:
         nomor_pasal.append(
             int(
@@ -369,11 +369,11 @@ for p in reg.pasal_list:
     except ValueError:
         pass
 
-nomor_pasal.sort()
+    nomor_pasal.sort()
 
-missing: list[int] = []
+    missing: list[int] = []
 
-if nomor_pasal:
+    if nomor_pasal:
     for i in range(
         nomor_pasal[0],
         nomor_pasal[-1],
@@ -381,13 +381,13 @@ if nomor_pasal:
         if i not in nomor_pasal:
             missing.append(i)
 
-(out_dir / "_debug_missing_pasal.txt").write_text(
+    (out_dir / "_debug_missing_pasal.txt").write_text(
     "\n".join(
         f"Pasal {x}"
         for x in missing
     ),
     encoding="utf-8",
-)
+    )
     print(f"  {len(reg.pasal_list)} pasal terdeteksi")
 
     if not reg.pasal_list:
