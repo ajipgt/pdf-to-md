@@ -72,7 +72,7 @@ jobs:
           echo '${{ secrets.GDRIVE_SA_KEY }}' > /tmp/sa_key.json
 
       - name: Extract PDF to Markdown
-        run: python scripts/extract.py
+        run: python scripts/new-extract.py
         env:
           GDRIVE_FILE_ID: ${{ github.event.inputs.file_id }}
           REG_ID: ${{ github.event.inputs.reg_id }}
