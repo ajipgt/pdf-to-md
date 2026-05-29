@@ -259,7 +259,7 @@ def render_bunyi_pasal(
 
     return "\n".join(parts).strip()
 
-def generate_pasal_md(pasal: Pasal, reg: Regulasi, semua_konsep: list[str]) -> str:
+def generate_pasal_md(pasal: Pasal, reg: Regulasi) -> str:
     """Generate satu file MD untuk satu pasal."""
     slug_pasal = f"pasal-{pasal.nomor.lower()}"
     tag_bab = f"bab-{pasal.bab.split()[1].lower()}" if pasal.bab else ""
@@ -278,13 +278,13 @@ status: {reg.status}
 
     heading = f"# {reg.title} Pasal {pasal.nomor}"
 
-    bunyi = f"## Bunyi Pasal\n\n{render_bunyi_pasal(pasal, semua_konsep)}"
+    bunyi = f"## Bunyi Pasal\n\n{render_bunyi_pasal(pasal)}"
 
     
     nav_parts = [f"[[index|← Daftar Pasal]]"]
     catatan_nav = "\n\n---\n" + " · ".join(nav_parts)
 
-    return "\n\n".join([frontmatter, heading, Bunyi, ]) + catatan_nav
+    return "\n\n".join([frontmatter, heading, bunyi, ]) + catatan_nav
 
 
 def generate_index_md(reg: Regulasi) -> str:
