@@ -74,28 +74,40 @@ class Regulasi:
 
 # ── Download dari Google Drive ────────────────────────────────────────────────
 def build_drive_service():
+    if not SA_KEY or not os.path.exists(SA_KEY):
+        print(f"ERROR: GOOGLE_APPLICATION_CREDENTIALS tidak valid atau file tidak ditemukan: {SA_KEY}")
+        sys.exit(1)
     creds = service_account.Credentials.from_service_account_file(SA_KEY, scopes=SCOPES)
     return build("drive", "v3", credentials=creds)
 
 
 def download_pdf(service, file_id: str) -> tuple[bytes, str]:
-    meta = service.files().get(fileId=file_id, fields="name,mimeType").execute()
+    try:
+        meta = service.files().get(fileId=file_id, fields="name,mimeType").execute()
+    except Exception as e:
+        print(f"ERROR: Gagal mengambil metadata file {file_id}: {e}")
+        sys.exit(1)
+
     filename: str = meta.get("name", "document.pdf")
     mime: str = meta.get("mimeType", "")
     print(f"Download: {filename}")
 
     buf = io.BytesIO()
-    if mime == "application/vnd.google-apps.document":
-        req = service.files().export_media(fileId=file_id, mimeType="application/pdf")
-    else:
-        req = service.files().get_media(fileId=file_id)
+    try:
+        if mime == "application/vnd.google-apps.document":
+            req = service.files().export_media(fileId=file_id, mimeType="application/pdf")
+        else:
+            req = service.files().get_media(fileId=file_id)
 
-    downloader = MediaIoBaseDownload(buf, req)
-    done = False
-    while not done:
-        status, done = downloader.next_chunk()
-        if status:
-            print(f"  {int(status.progress() * 100)}%")
+        downloader = MediaIoBaseDownload(buf, req)
+        done = False
+        while not done:
+            status, done = downloader.next_chunk()
+            if status:
+                print(f"  {int(status.progress() * 100)}%")
+    except Exception as e:
+        print(f"ERROR: Gagal mendownload file {file_id}: {e}")
+        sys.exit(1)
 
     return buf.getvalue(), filename
 
@@ -207,7 +219,7 @@ def parse_regulasi(lines: list[str], reg: Regulasi) -> None:
         if m_huruf:
             target = current_ayat if current_ayat else None
             if target:
-                target.huruf.append((m_huruf.group(1), m_huruf.group(2)))
+                target.huruf.append(Huruf(kode=m_huruf.group(1), teks=m_huruf.group(2)))
             i += 1
             continue
 
@@ -262,7 +274,13 @@ def render_bunyi_pasal(
 def generate_pasal_md(pasal: Pasal, reg: Regulasi) -> str:
     """Generate satu file MD untuk satu pasal."""
     slug_pasal = f"pasal-{pasal.nomor.lower()}"
-    tag_bab = f"bab-{pasal.bab.split()[1].lower()}" if pasal.bab else ""
+    tag_bab = ""
+    if pasal.bab:
+        bab_parts = pasal.bab.split()
+        if len(bab_parts) > 1:
+            tag_bab = f"bab-{bab_parts[1].lower()}"
+        else:
+            tag_bab = f"bab-{pasal.bab.lower()}"
 
     
 
@@ -403,7 +421,7 @@ def main() -> None:
     # Generate file per pasal
     for pasal in reg.pasal_list:
         slug = f"pasal-{pasal.nomor.lower()}"
-        md_content = generate_pasal_md(pasal, reg,)
+        md_content = generate_pasal_md(pasal, reg)
         (out_dir / f"{slug}.md").write_text(md_content, encoding="utf-8")
 
     # Generate index
