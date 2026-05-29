@@ -356,7 +356,7 @@ def main() -> None:
     nomor_pasal: list[int] = []
 
     for p in reg.pasal_list:
-    try:
+      try:
         nomor_pasal.append(
             int(
                 re.sub(
@@ -366,7 +366,7 @@ def main() -> None:
                 )
             )
         )
-    except ValueError:
+      except ValueError:
         pass
 
     nomor_pasal.sort()
@@ -374,10 +374,10 @@ def main() -> None:
     missing: list[int] = []
 
     if nomor_pasal:
-    for i in range(
+      for i in range(
         nomor_pasal[0],
         nomor_pasal[-1],
-    ):
+      ):
         if i not in nomor_pasal:
             missing.append(i)
 
