@@ -1,4 +1,5 @@
-name: PDF to Markdown (Google Drive)
+# .github/workflows/extract.yml
+name: PDF Regulasi to Markdown (Google Drive)
 
 on:
   workflow_dispatch:
@@ -6,9 +7,34 @@ on:
       file_id:
         description: 'Google Drive File ID (dari URL: /d/FILE_ID/)'
         required: true
-      output_name:
-        description: 'Nama file output (tanpa .md), default: pakai nama file Drive'
+      reg_id:
+        description: 'ID regulasi (contoh: pp-55-2012)'
+        required: true
+      reg_title:
+        description: 'Judul regulasi (contoh: PP 55 Tahun 2012)'
+        required: true
+      reg_type:
+        description: 'Tipe regulasi'
+        required: true
+        default: 'peraturan-pemerintah'
+        type: choice
+        options:
+          - peraturan-pemerintah
+          - undang-undang
+          - peraturan-menteri
+          - peraturan-daerah
+          - peraturan-bupati
+          - peraturan-walikota
+          - keputusan-menteri
+      reg_status:
+        description: 'Status regulasi'
         required: false
+        default: 'berlaku'
+        type: choice
+        options:
+          - berlaku
+          - dicabut
+          - diubah
 
 jobs:
   extract:
@@ -17,18 +43,31 @@ jobs:
       contents: write
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
+      - name: Cache pip dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
       - name: Install dependencies
         run: |
-          pip install pdfplumber pymupdf google-api-python-client google-auth
+          pip install \
+            pdfplumber \
+            pymupdf \
+            google-api-python-client \
+            google-auth
 
-      - name: Setup service account
+      - name: Setup service account credentials
         run: |
           echo '${{ secrets.GDRIVE_SA_KEY }}' > /tmp/sa_key.json
 
@@ -36,18 +75,40 @@ jobs:
         run: python scripts/extract.py
         env:
           GDRIVE_FILE_ID: ${{ github.event.inputs.file_id }}
-          OUTPUT_NAME: ${{ github.event.inputs.output_name }}
+          REG_ID: ${{ github.event.inputs.reg_id }}
+          REG_TITLE: ${{ github.event.inputs.reg_title }}
+          REG_TYPE: ${{ github.event.inputs.reg_type }}
+          REG_STATUS: ${{ github.event.inputs.reg_status }}
           GOOGLE_APPLICATION_CREDENTIALS: /tmp/sa_key.json
 
       - name: Cleanup credentials
         if: always()
         run: rm -f /tmp/sa_key.json
 
-      - name: Commit hasil
+      - name: Commit dan push hasil
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add output/
-          git diff --staged --quiet && echo "Tidak ada perubahan" || \
-            git commit -m "chore: extract $(ls output/*.md | tail -1 | xargs basename) [skip ci]" && \
+          if git diff --staged --quiet; then
+            echo "Tidak ada perubahan untuk di-commit"
+          else
+            PASAL_COUNT=$(find output/${{ github.event.inputs.reg_id }} -name "pasal-*.md" | wc -l)
+            git commit -m "feat: extract ${{ github.event.inputs.reg_id }} (${PASAL_COUNT} pasal) [skip ci]"
             git push
+          fi
+
+      - name: Summary
+        if: success()
+        run: |
+          PASAL_COUNT=$(find output/${{ github.event.inputs.reg_id }} -name "pasal-*.md" 2>/dev/null | wc -l)
+          echo "## ✅ Ekstraksi Selesai" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Key | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|-----|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Regulasi | ${{ github.event.inputs.reg_title }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| ID | \`${{ github.event.inputs.reg_id }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| Tipe | ${{ github.event.inputs.reg_type }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Status | ${{ github.event.inputs.reg_status }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Total Pasal | ${PASAL_COUNT} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Output | \`output/${{ github.event.inputs.reg_id }}/\` |" >> $GITHUB_STEP_SUMMARY
