@@ -26,13 +26,15 @@ SCOPES = ["https://www.googleapis.com/auth/drive.readonly"]
 # ── Normalisasi teks PDF ──────────────────────────────────────────────────────
 def normalize_line(line: str) -> str:
     """Fix artefak umum PDF regulasi Indonesia."""
-    # Fix 'Pasa1' atau 'Pasal' langsung diikuti angka tanpa spasi
+    # Fix 'Pasa1 N' atau 'PasalN' → 'Pasal N' (l terbaca sebagai 1)
     line = re.sub(r'(?i)\bPasa[l1]\s*(\d+[A-Z]?)\b', lambda m: f'Pasal {m.group(1)}', line)
     # Fix 'BABI' → 'BAB I', 'BABII' → 'BAB II'
     line = re.sub(r'(?i)\bBAB([IVXLCDM]+)\b', lambda m: f'BAB {m.group(1)}', line)
+    # Fix 'LAMPlRAN' → 'LAMPIRAN' (l/I/1 terbaca sama)
+    line = re.sub(r'(?i)\bLAMP[Il1]RAN\b', 'LAMPIRAN', line)
     # Fix ayat tanpa spasi: '(1)teks' → '(1) teks'
     line = re.sub(r'\((\d+)\)([^\s\)])', r'(\1) \2', line)
-    # Fix huruf: 'a.teks' → 'a. teks'
+    # Fix huruf tanpa spasi: 'a.teks' → 'a. teks'
     line = re.sub(r'^([a-z])\.([^\s])', r'\1. \2', line)
     return line.strip()
 
@@ -57,21 +59,12 @@ def is_noise(line: str) -> bool:
     return False
 
 
-# ── Regex ─────────────────────────────────────────────────────────────────────
-
-# Pasal header HANYA jika baris hanya berisi "Pasal N" (standalone)
-# Tidak boleh ada kata sebelumnya (seperti "dalam Pasal 3" atau "Pasal 3 ayat")
+# ── Regex struktur hukum ──────────────────────────────────────────────────────
 RE_PASAL_STANDALONE = re.compile(r'^Pasal\s+(\d+[A-Z]?)\s*$', re.IGNORECASE)
-
-# Pasal yang diikuti langsung teks di baris sama — tapi BUKAN referensi
-# Referensi selalu punya kata sebelumnya: "dalam", "dimaksud", "sebagaimana"
-# Pattern ini hanya match jika Pasal ada di awal baris DAN tidak diikuti kata kunci referensi
 RE_PASAL_DENGAN_TEKS = re.compile(
     r'^Pasal\s+(\d+[A-Z]?)\s+(?!ayat|huruf|dan|atau|jo\.|junto|serta)(.+)$',
     re.IGNORECASE,
 )
-
-# Referensi pasal dalam kalimat — untuk DIABAIKAN sebagai header pasal
 RE_REFERENSI_PASAL = re.compile(
     r'(?:dalam|dimaksud|sebagaimana|ketentuan|berlaku|lihat)\s+Pasal\s+\d+',
     re.IGNORECASE,
@@ -84,8 +77,12 @@ RE_BAB      = re.compile(r'^BAB\s+([IVXLCDM]+)\s*$', re.IGNORECASE)
 RE_BAGIAN   = re.compile(r'^Bagian\s+(.+)', re.IGNORECASE)
 RE_PARAGRAF = re.compile(r'^Paragraf\s+(\d+)', re.IGNORECASE)
 
-# Deteksi masuk lampiran — setelah ini stop parsing pasal
-RE_LAMPIRAN = re.compile(r'^LAMPIRAN', re.IGNORECASE)
+# Lampiran standalone: "LAMPIRAN I", "LAMPIRAN III", "LAMPIRAN" saja
+# Setelah normalize_line(), LAMPlRAN sudah jadi LAMPIRAN
+RE_LAMPIRAN_STANDALONE = re.compile(
+    r'^LAMPIRAN\s*(?:[IVXLCDM]+|\d+|[A-Z])?\s*$',
+    re.IGNORECASE,
+)
 
 
 # ── Dataclasses ───────────────────────────────────────────────────────────────
@@ -121,7 +118,7 @@ class Regulasi:
     konsideran: list[str] = field(default_factory=list)
 
 
-# ── Download dari Google Drive ────────────────────────────────────────────────
+# ── Google Drive ──────────────────────────────────────────────────────────────
 def build_drive_service():
     if not SA_KEY or not os.path.exists(SA_KEY):
         print(f"ERROR: credentials tidak ditemukan: {SA_KEY}")
@@ -185,23 +182,19 @@ def extract_raw_lines(pdf_bytes: bytes) -> list[str]:
     return lines
 
 
-# ── Deteksi apakah baris adalah header pasal baru ────────────────────────────
+# ── Deteksi header pasal ──────────────────────────────────────────────────────
 def try_parse_pasal_header(line: str) -> tuple[str, str] | None:
     """
-    Return (nomor_pasal, sisa_teks) jika baris adalah header pasal.
-    Return None jika bukan header pasal (referensi dalam kalimat, dll).
+    Return (nomor, sisa_teks) jika baris adalah header pasal baru.
+    Return None jika referensi pasal dalam kalimat.
     """
-    # Jika ada kata referensi di baris yang sama → bukan header pasal
     if RE_REFERENSI_PASAL.search(line):
         return None
 
-    # Match standalone: baris hanya "Pasal N"
     m = RE_PASAL_STANDALONE.match(line)
     if m:
         return (m.group(1), "")
 
-    # Match pasal dengan teks langsung: "Pasal N Uji Berkala dilakukan..."
-    # tapi bukan "Pasal N ayat (1)" atau "Pasal N dan Pasal M"
     m2 = RE_PASAL_DENGAN_TEKS.match(line)
     if m2:
         return (m2.group(1), m2.group(2).strip())
@@ -209,7 +202,7 @@ def try_parse_pasal_header(line: str) -> tuple[str, str] | None:
     return None
 
 
-# ── Parser struktur hukum ─────────────────────────────────────────────────────
+# ── Parser utama ──────────────────────────────────────────────────────────────
 def flush_pasal(current_pasal: Pasal | None, current_ayat: Ayat | None, reg: Regulasi) -> None:
     if current_pasal is None:
         return
@@ -224,21 +217,18 @@ def parse_regulasi(lines: list[str], reg: Regulasi) -> None:
     current_bab = ""
     current_bagian = ""
     in_konsideran = True
-    in_lampiran = False
-
-    # Nomor pasal terakhir yang valid — untuk deteksi duplikat/backtrack
     seen_pasal: set[str] = set()
 
     i = 0
     while i < len(lines):
         line = lines[i]
 
-        # Stop saat masuk lampiran
-        if RE_LAMPIRAN.match(line):
-            in_lampiran = True
+        # ── LAMPIRAN standalone → stop parsing batang tubuh ──
+        if RE_LAMPIRAN_STANDALONE.match(line):
             flush_pasal(current_pasal, current_ayat, reg)
             current_pasal = None
             current_ayat = None
+            print(f"  → Stop di baris: '{line}' (deteksi lampiran)")
             break
 
         # ── BAB ──
@@ -246,13 +236,13 @@ def parse_regulasi(lines: list[str], reg: Regulasi) -> None:
             current_bab = line
             if i + 1 < len(lines):
                 next_line = lines[i + 1]
-                # Judul BAB di baris berikutnya jika bukan pasal/BAB/Bagian
                 if (not RE_PASAL_STANDALONE.match(next_line)
                         and not RE_BAB.match(next_line)
-                        and not RE_BAGIAN.match(next_line)):
+                        and not RE_BAGIAN.match(next_line)
+                        and not RE_LAMPIRAN_STANDALONE.match(next_line)):
                     current_bab += f" {next_line}"
                     i += 1
-            current_bagian = ""  # reset bagian saat ganti BAB
+            current_bagian = ""
             i += 1
             continue
 
@@ -274,10 +264,8 @@ def parse_regulasi(lines: list[str], reg: Regulasi) -> None:
             nomor, sisa = pasal_result
             in_konsideran = False
 
-            # Cek duplikat: kalau nomor ini sudah pernah muncul,
-            # kemungkinan ini referensi yang lolos filter — skip
+            # Duplikat nomor → kemungkinan referensi yang lolos filter, jadikan teks biasa
             if nomor in seen_pasal:
-                # Tambahkan ke teks pasal aktif sebagai teks biasa
                 if current_pasal:
                     if current_ayat:
                         current_ayat.teks += f" {line}"
@@ -295,7 +283,7 @@ def parse_regulasi(lines: list[str], reg: Regulasi) -> None:
             i += 1
             continue
 
-        # Konsideran
+        # ── Konsideran (sebelum Pasal 1) ──
         if in_konsideran:
             reg.konsideran.append(line)
             i += 1
@@ -305,7 +293,7 @@ def parse_regulasi(lines: list[str], reg: Regulasi) -> None:
             i += 1
             continue
 
-        # ── AYAT ──
+        # ── AYAT: (1), (2), ... ──
         m_ayat = RE_AYAT.match(line)
         if m_ayat:
             if current_ayat:
@@ -314,7 +302,7 @@ def parse_regulasi(lines: list[str], reg: Regulasi) -> None:
             i += 1
             continue
 
-        # ── HURUF ──
+        # ── HURUF: a., b., ... ──
         m_huruf = RE_HURUF.match(line)
         if m_huruf:
             huruf_obj = Huruf(kode=m_huruf.group(1), teks=m_huruf.group(2).strip())
@@ -325,7 +313,7 @@ def parse_regulasi(lines: list[str], reg: Regulasi) -> None:
             i += 1
             continue
 
-        # ── ANGKA (list definisi) ──
+        # ── ANGKA: 1., 2., ... (list definisi Pasal 1) ──
         m_angka = RE_ANGKA.match(line)
         if m_angka:
             if current_ayat:
@@ -343,12 +331,12 @@ def parse_regulasi(lines: list[str], reg: Regulasi) -> None:
 
         i += 1
 
-    # Simpan pasal terakhir jika tidak ada lampiran
-    if not in_lampiran:
+    # Simpan pasal terakhir jika parser tidak di-stop oleh lampiran
+    if current_pasal is not None:
         flush_pasal(current_pasal, current_ayat, reg)
 
 
-# ── Generate MD ───────────────────────────────────────────────────────────────
+# ── Generate Markdown ─────────────────────────────────────────────────────────
 def render_bunyi_pasal(pasal: Pasal) -> str:
     parts: list[str] = []
 
@@ -424,12 +412,14 @@ def write_debug(out_dir: Path, lines: list[str], reg: Regulasi) -> None:
         for p in reg.pasal_list
         if re.sub(r"[^0-9]", "", p.nomor)
     ))
-    missing = [i for i in range(detected_nums[0], detected_nums[-1] + 1)
-               if i not in detected_nums] if detected_nums else []
+    missing = (
+        [i for i in range(detected_nums[0], detected_nums[-1] + 1) if i not in detected_nums]
+        if detected_nums else []
+    )
 
     debug_info = [
         f"Terdeteksi: {len(reg.pasal_list)} pasal",
-        f"Range: Pasal {detected_nums[0]} - Pasal {detected_nums[-1]}" if detected_nums else "",
+        f"Range: Pasal {detected_nums[0]} - Pasal {detected_nums[-1]}" if detected_nums else "Tidak ada pasal",
         f"Missing ({len(missing)}): {missing}",
         "",
         "=== DETAIL PASAL ===",
@@ -442,10 +432,11 @@ def write_debug(out_dir: Path, lines: list[str], reg: Regulasi) -> None:
         )
 
     (out_dir / "_debug_summary.txt").write_text("\n".join(debug_info), encoding="utf-8")
+
     if missing:
         print(f"  ⚠ Missing pasal: {missing}")
     else:
-        print("  ✓ Tidak ada pasal yang missing")
+        print(f"  ✓ Tidak ada pasal yang missing")
 
 
 # ── Main ──────────────────────────────────────────────────────────────────────
