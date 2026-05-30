@@ -1,0 +1,133 @@
+Terdeteksi: 128 pasal
+Range: Pasal 1 - Pasal 128
+Missing (0): []
+
+=== DETAIL PASAL ===
+Pasal    1 | 0 ayat | 0 huruf | bab: BAB I KETENTUAN UMUM
+Pasal    2 | 0 ayat | 0 huruf | bab: BAB I KETENTUAN UMUM
+Pasal    3 | 3 ayat | 8 huruf | bab: BAB II ANGKUTAN ORANG DAN/ATAU BARANG
+Pasal    4 | 3 ayat | 3 huruf | bab: BAB II ANGKUTAN ORANG DAN/ATAU BARANG
+Pasal    5 | 4 ayat | 5 huruf | bab: BAB II ANGKUTAN ORANG DAN/ATAU BARANG
+Pasal    6 | 0 ayat | 0 huruf | bab: BAB II ANGKUTAN ORANG DAN/ATAU BARANG
+Pasal    7 | 2 ayat | 3 huruf | bab: BAB II ANGKUTAN ORANG DAN/ATAU BARANG
+Pasal    8 | 4 ayat | 4 huruf | bab: BAB II ANGKUTAN ORANG DAN/ATAU BARANG
+Pasal    9 | 2 ayat | 4 huruf | bab: BAB II ANGKUTAN ORANG DAN/ATAU BARANG
+Pasal   10 | 4 ayat | 5 huruf | bab: BAB II ANGKUTAN ORANG DAN/ATAU BARANG
+Pasal   11 | 0 ayat | 0 huruf | bab: BAB II ANGKUTAN ORANG DAN/ATAU BARANG
+Pasal   12 | 0 ayat | 0 huruf | bab: BAB II ANGKUTAN ORANG DAN/ATAU BARANG
+Pasal   13 | 3 ayat | 0 huruf | bab: BAB II ANGKUTAN ORANG DAN/ATAU BARANG
+Pasal   14 | 2 ayat | 0 huruf | bab: BAB III KEWAJIBAN PENYEDIAAN ANGKUTAN UM
+Pasal   15 | 3 ayat | 0 huruf | bab: BAB III KEWAJIBAN PENYEDIAAN ANGKUTAN UM
+Pasal   16 | 0 ayat | 0 huruf | bab: BAB III KEWAJIBAN PENYEDIAAN ANGKUTAN UM
+Pasal   17 | 0 ayat | 0 huruf | bab: BAB III KEWAJIBAN PENYEDIAAN ANGKUTAN UM
+Pasal   18 | 0 ayat | 0 huruf | bab: BAB III KEWAJIBAN PENYEDIAAN ANGKUTAN UM
+Pasal   19 | 0 ayat | 0 huruf | bab: BAB III KEWAJIBAN PENYEDIAAN ANGKUTAN UM
+Pasal   20 | 3 ayat | 3 huruf | bab: BAB III KEWAJIBAN PENYEDIAAN ANGKUTAN UM
+Pasal   21 | 0 ayat | 0 huruf | bab: BAB IV ANGKUTAN ORANG DENGAN KENDARAAN B
+Pasal   22 | 0 ayat | 0 huruf | bab: BAB IV ANGKUTAN ORANG DENGAN KENDARAAN B
+Pasal   23 | 3 ayat | 8 huruf | bab: BAB IV ANGKUTAN ORANG DENGAN KENDARAAN B
+Pasal   24 | 0 ayat | 0 huruf | bab: BAB IV ANGKUTAN ORANG DENGAN KENDARAAN B
+Pasal   25 | 2 ayat | 0 huruf | bab: BAB IV ANGKUTAN ORANG DENGAN KENDARAAN B
+Pasal   26 | 4 ayat | 11 huruf | bab: BAB IV ANGKUTAN ORANG DENGAN KENDARAAN B
+Pasal   27 | 3 ayat | 8 huruf | bab: BAB IV ANGKUTAN ORANG DENGAN KENDARAAN B
+Pasal   28 | 3 ayat | 5 huruf | bab: BAB IV ANGKUTAN ORANG DENGAN KENDARAAN B
+Pasal   29 | 3 ayat | 6 huruf | bab: BAB IV ANGKUTAN ORANG DENGAN KENDARAAN B
+Pasal   30 | 0 ayat | 0 huruf | bab: BAB IV ANGKUTAN ORANG DENGAN KENDARAAN B
+Pasal   31 | 4 ayat | 14 huruf | bab: BAB IV ANGKUTAN ORANG DENGAN KENDARAAN B
+Pasal   32 | 0 ayat | 0 huruf | bab: BAB IV ANGKUTAN ORANG DENGAN KENDARAAN B
+Pasal   33 | 2 ayat | 0 huruf | bab: BAB IV ANGKUTAN ORANG DENGAN KENDARAAN B
+Pasal   34 | 2 ayat | 0 huruf | bab: BAB IV ANGKUTAN ORANG DENGAN KENDARAAN B
+Pasal   35 | 2 ayat | 0 huruf | bab: BAB IV ANGKUTAN ORANG DENGAN KENDARAAN B
+Pasal   36 | 3 ayat | 9 huruf | bab: BAB IV ANGKUTAN ORANG DENGAN KENDARAAN B
+Pasal   37 | 2 ayat | 0 huruf | bab: BAB IV ANGKUTAN ORANG DENGAN KENDARAAN B
+Pasal   38 | 3 ayat | 0 huruf | bab: BAB IV ANGKUTAN ORANG DENGAN KENDARAAN B
+Pasal   39 | 2 ayat | 0 huruf | bab: BAB IV ANGKUTAN ORANG DENGAN KENDARAAN B
+Pasal   40 | 0 ayat | 0 huruf | bab: BAB IV ANGKUTAN ORANG DENGAN KENDARAAN B
+Pasal   41 | 0 ayat | 0 huruf | bab: BAB IV ANGKUTAN ORANG DENGAN KENDARAAN B
+Pasal   42 | 5 ayat | 4 huruf | bab: BAB IV ANGKUTAN ORANG DENGAN KENDARAAN B
+Pasal   43 | 2 ayat | 2 huruf | bab: BAB IV ANGKUTAN ORANG DENGAN KENDARAAN B
+Pasal   44 | 4 ayat | 2 huruf | bab: BAB IV ANGKUTAN ORANG DENGAN KENDARAAN B
+Pasal   45 | 3 ayat | 2 huruf | bab: BAB IV ANGKUTAN ORANG DENGAN KENDARAAN B
+Pasal   46 | 0 ayat | 0 huruf | bab: BAB IV ANGKUTAN ORANG DENGAN KENDARAAN B
+Pasal   47 | 7 ayat | 6 huruf | bab: BAB IV ANGKUTAN ORANG DENGAN KENDARAAN B
+Pasal   48 | 3 ayat | 7 huruf | bab: BAB IV ANGKUTAN ORANG DENGAN KENDARAAN B
+Pasal   49 | 1 ayat | 3 huruf | bab: BAB IV ANGKUTAN ORANG DENGAN KENDARAAN B
+Pasal   50 | 0 ayat | 0 huruf | bab: BAB IV ANGKUTAN ORANG DENGAN KENDARAAN B
+Pasal   51 | 0 ayat | 0 huruf | bab: BAB V ANGKUTAN BARANG DENGAN KENDARAAN B
+Pasal   52 | 0 ayat | 0 huruf | bab: BAB V ANGKUTAN BARANG DENGAN KENDARAAN B
+Pasal   53 | 5 ayat | 16 huruf | bab: BAB V ANGKUTAN BARANG DENGAN KENDARAAN B
+Pasal   54 | 0 ayat | 0 huruf | bab: BAB V ANGKUTAN BARANG DENGAN KENDARAAN B
+Pasal   55 | 6 ayat | 14 huruf | bab: BAB VI DOKUMEN ANGKUTAN ORANG DAN/ATAU B
+Pasal   56 | 3 ayat | 4 huruf | bab: BAB VI DOKUMEN ANGKUTAN ORANG DAN/ATAU B
+Pasal   57 | 0 ayat | 0 huruf | bab: BAB VI DOKUMEN ANGKUTAN ORANG DAN/ATAU B
+Pasal   58 | 2 ayat | 0 huruf | bab: BAB VI DOKUMEN ANGKUTAN ORANG DAN/ATAU B
+Pasal   59 | 0 ayat | 0 huruf | bab: BAB VI DOKUMEN ANGKUTAN ORANG DAN/ATAU B
+Pasal   60 | 0 ayat | 0 huruf | bab: BAB VII PENGAWASAN MUATAN ANGKUTAN BARAN
+Pasal   61 | 4 ayat | 5 huruf | bab: BAB VII PENGAWASAN MUATAN ANGKUTAN BARAN
+Pasal   62 | 3 ayat | 2 huruf | bab: BAB VII PENGAWASAN MUATAN ANGKUTAN BARAN
+Pasal   63 | 2 ayat | 4 huruf | bab: BAB VII PENGAWASAN MUATAN ANGKUTAN BARAN
+Pasal   64 | 2 ayat | 8 huruf | bab: BAB VII PENGAWASAN MUATAN ANGKUTAN BARAN
+Pasal   65 | 3 ayat | 3 huruf | bab: BAB VII PENGAWASAN MUATAN ANGKUTAN BARAN
+Pasal   66 | 0 ayat | 0 huruf | bab: BAB VII PENGAWASAN MUATAN ANGKUTAN BARAN
+Pasal   67 | 2 ayat | 0 huruf | bab: BAB VII PENGAWASAN MUATAN ANGKUTAN BARAN
+Pasal   68 | 0 ayat | 0 huruf | bab: BAB VII PENGAWASAN MUATAN ANGKUTAN BARAN
+Pasal   69 | 2 ayat | 7 huruf | bab: BAB VII PENGAWASAN MUATAN ANGKUTAN BARAN
+Pasal   70 | 6 ayat | 0 huruf | bab: BAB VII PENGAWASAN MUATAN ANGKUTAN BARAN
+Pasal   71 | 2 ayat | 0 huruf | bab: BAB VII PENGAWASAN MUATAN ANGKUTAN BARAN
+Pasal   72 | 0 ayat | 0 huruf | bab: BAB VII PENGAWASAN MUATAN ANGKUTAN BARAN
+Pasal   73 | 3 ayat | 6 huruf | bab: BAB VII PENGAWASAN MUATAN ANGKUTAN BARAN
+Pasal   74 | 0 ayat | 0 huruf | bab: BAB VII PENGAWASAN MUATAN ANGKUTAN BARAN
+Pasal   75 | 4 ayat | 3 huruf | bab: BAB VII PENGAWASAN MUATAN ANGKUTAN BARAN
+Pasal   76 | 0 ayat | 0 huruf | bab: BAB VII PENGAWASAN MUATAN ANGKUTAN BARAN
+Pasal   77 | 0 ayat | 0 huruf | bab: BAB VII PENGAWASAN MUATAN ANGKUTAN BARAN
+Pasal   78 | 4 ayat | 5 huruf | bab: BAB VIII PENGUSAHAAN ANGKUTAN
+Pasal   79 | 2 ayat | 4 huruf | bab: BAB VIII PENGUSAHAAN ANGKUTAN
+Pasal   80 | 3 ayat | 0 huruf | bab: BAB VIII PENGUSAHAAN ANGKUTAN
+Pasal   81 | 3 ayat | 3 huruf | bab: BAB VIII PENGUSAHAAN ANGKUTAN
+Pasal   82 | 0 ayat | 0 huruf | bab: BAB VIII PENGUSAHAAN ANGKUTAN
+Pasal   83 | 0 ayat | 0 huruf | bab: BAB VIII PENGUSAHAAN ANGKUTAN
+Pasal   84 | 4 ayat | 3 huruf | bab: BAB VIII PENGUSAHAAN ANGKUTAN
+Pasal   85 | 0 ayat | 0 huruf | bab: BAB VIII PENGUSAHAAN ANGKUTAN
+Pasal   86 | 3 ayat | 8 huruf | bab: BAB VIII PENGUSAHAAN ANGKUTAN
+Pasal   87 | 5 ayat | 2 huruf | bab: BAB VIII PENGUSAHAAN ANGKUTAN
+Pasal   88 | 5 ayat | 5 huruf | bab: BAB VIII PENGUSAHAAN ANGKUTAN
+Pasal   89 | 0 ayat | 0 huruf | bab: BAB VIII PENGUSAHAAN ANGKUTAN
+Pasal   90 | 3 ayat | 2 huruf | bab: BAB VIII PENGUSAHAAN ANGKUTAN
+Pasal   91 | 2 ayat | 0 huruf | bab: BAB VIII PENGUSAHAAN ANGKUTAN
+Pasal   92 | 0 ayat | 0 huruf | bab: BAB VIII PENGUSAHAAN ANGKUTAN
+Pasal   93 | 0 ayat | 0 huruf | bab: BAB VIII PENGUSAHAAN ANGKUTAN
+Pasal   94 | 0 ayat | 0 huruf | bab: BAB VIII PENGUSAHAAN ANGKUTAN
+Pasal   95 | 0 ayat | 0 huruf | bab: BAB VIII PENGUSAHAAN ANGKUTAN
+Pasal   96 | 0 ayat | 0 huruf | bab: BAB VIII PENGUSAHAAN ANGKUTAN
+Pasal   97 | 0 ayat | 0 huruf | bab: BAB VIII PENGUSAHAAN ANGKUTAN
+Pasal   98 | 3 ayat | 3 huruf | bab: BAB VIII PENGUSAHAAN ANGKUTAN
+Pasal   99 | 0 ayat | 0 huruf | bab: BAB IX TARIF ANGKUTAN
+Pasal  100 | 3 ayat | 8 huruf | bab: BAB IX TARIF ANGKUTAN
+Pasal  101 | 0 ayat | 0 huruf | bab: BAB IX TARIF ANGKUTAN
+Pasal  102 | 0 ayat | 0 huruf | bab: BAB IX TARIF ANGKUTAN
+Pasal  103 | 4 ayat | 3 huruf | bab: BAB IX TARIF ANGKUTAN
+Pasal  104 | 0 ayat | 0 huruf | bab: BAB IX TARIF ANGKUTAN
+Pasal  105 | 0 ayat | 0 huruf | bab: BAB IX TARIF ANGKUTAN
+Pasal  106 | 0 ayat | 0 huruf | bab: BAB IX TARIF ANGKUTAN
+Pasal  107 | 6 ayat | 9 huruf | bab: BAB X SUBSIDI ANGKUTAN PENUMPANG UMUM
+Pasal  108 | 3 ayat | 2 huruf | bab: BAB X SUBSIDI ANGKUTAN PENUMPANG UMUM
+Pasal  109 | 0 ayat | 0 huruf | bab: BAB X SUBSIDI ANGKUTAN PENUMPANG UMUM
+Pasal  110 | 0 ayat | 0 huruf | bab: BAB X SUBSIDI ANGKUTAN PENUMPANG UMUM
+Pasal  111 | 0 ayat | 0 huruf | bab: BAB X SUBSIDI ANGKUTAN PENUMPANG UMUM
+Pasal  112 | 2 ayat | 5 huruf | bab: BAB XI INDUSTRI JASA ANGKUTAN UMUM
+Pasal  113 | 0 ayat | 0 huruf | bab: BAB XI INDUSTRI JASA ANGKUTAN UMUM
+Pasal  114 | 2 ayat | 2 huruf | bab: BAB XI INDUSTRI JASA ANGKUTAN UMUM
+Pasal  115 | 3 ayat | 8 huruf | bab: BAB XI INDUSTRI JASA ANGKUTAN UMUM
+Pasal  116 | 0 ayat | 0 huruf | bab: BAB XI INDUSTRI JASA ANGKUTAN UMUM
+Pasal  117 | 0 ayat | 0 huruf | bab: BAB XI INDUSTRI JASA ANGKUTAN UMUM
+Pasal  118 | 0 ayat | 0 huruf | bab: BAB XI INDUSTRI JASA ANGKUTAN UMUM
+Pasal  119 | 3 ayat | 3 huruf | bab: BAB XII SISTEM INFORMASI MANAJEMEN PERIZ
+Pasal  120 | 5 ayat | 6 huruf | bab: BAB XIII PERAN SERTA MASYARAKAT
+Pasal  121 | 3 ayat | 4 huruf | bab: BAB XIV SANKSI ADMINISTRATIF
+Pasal  122 | 0 ayat | 0 huruf | bab: BAB XIV SANKSI ADMINISTRATIF
+Pasal  123 | 3 ayat | 4 huruf | bab: BAB XIV SANKSI ADMINISTRATIF
+Pasal  124 | 6 ayat | 0 huruf | bab: BAB XIV SANKSI ADMINISTRATIF
+Pasal  125 | 0 ayat | 0 huruf | bab: BAB XV KETENTUAN PERALIHAN
+Pasal  126 | 0 ayat | 0 huruf | bab: BAB XVI KETENTUAN PENUTUP
+Pasal  127 | 0 ayat | 0 huruf | bab: BAB XVI KETENTUAN PENUTUP
+Pasal  128 | 0 ayat | 0 huruf | bab: BAB XVI KETENTUAN PENUTUP
