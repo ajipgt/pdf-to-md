@@ -26,16 +26,22 @@ SCOPES = ["https://www.googleapis.com/auth/drive.readonly"]
 # ── Normalisasi teks PDF ──────────────────────────────────────────────────────
 def normalize_line(line: str) -> str:
     """Fix artefak umum PDF regulasi Indonesia."""
-    # Fix 'Pasa1 N' atau 'PasalN' → 'Pasal N' (l terbaca sebagai 1)
+    # Fix 'Pasa1 N' atau 'PasalN' → 'Pasal N'
     line = re.sub(r'(?i)\bPasa[l1]\s*(\d+[A-Z]?)\b', lambda m: f'Pasal {m.group(1)}', line)
     # Fix 'BABI' → 'BAB I', 'BABII' → 'BAB II'
     line = re.sub(r'(?i)\bBAB([IVXLCDM]+)\b', lambda m: f'BAB {m.group(1)}', line)
-    # Fix 'LAMPlRAN' → 'LAMPIRAN' (l/I/1 terbaca sama)
+    # Fix 'LAMPlRAN' → 'LAMPIRAN'
     line = re.sub(r'(?i)\bLAMP[Il1]RAN\b', 'LAMPIRAN', line)
     # Fix ayat tanpa spasi: '(1)teks' → '(1) teks'
     line = re.sub(r'\((\d+)\)([^\s\)])', r'(\1) \2', line)
     # Fix huruf tanpa spasi: 'a.teks' → 'a. teks'
     line = re.sub(r'^([a-z])\.([^\s])', r'\1. \2', line)
+    # Fix kata kapital menempel: 'KETENTUANUMUM' → 'KETENTUAN UMUM'
+    # Huruf kecil diikuti huruf kapital → insert spasi
+    line = re.sub(r'([a-z])([A-Z])', r'\1 \2', line)
+    # Dua huruf kapital diikuti kapital+kecil → insert spasi
+    # Contoh: 'RUANGLINGKUP' → tidak sempurna, tapi bantu sebagian kasus
+    line = re.sub(r'([A-Z]{2,})([A-Z][a-z])', r'\1 \2', line)
     return line.strip()
 
 
@@ -69,16 +75,12 @@ RE_REFERENSI_PASAL = re.compile(
     r'(?:dalam|dimaksud|sebagaimana|ketentuan|berlaku|lihat)\s+Pasal\s+\d+',
     re.IGNORECASE,
 )
-
-RE_AYAT     = re.compile(r'^\((\d+)\)\s*(.*)')
-RE_HURUF    = re.compile(r'^([a-z])\.\s+(.*)')
-RE_ANGKA    = re.compile(r'^(\d+)\.\s+(.*)')
-RE_BAB      = re.compile(r'^BAB\s+([IVXLCDM]+)\s*$', re.IGNORECASE)
-RE_BAGIAN   = re.compile(r'^Bagian\s+(.+)', re.IGNORECASE)
-RE_PARAGRAF = re.compile(r'^Paragraf\s+(\d+)', re.IGNORECASE)
-
-# Lampiran standalone: "LAMPIRAN I", "LAMPIRAN III", "LAMPIRAN" saja
-# Setelah normalize_line(), LAMPlRAN sudah jadi LAMPIRAN
+RE_AYAT             = re.compile(r'^\((\d+)\)\s*(.*)')
+RE_HURUF            = re.compile(r'^([a-z])\.\s+(.*)')
+RE_ANGKA            = re.compile(r'^(\d+)\.\s+(.*)')
+RE_BAB              = re.compile(r'^BAB\s+([IVXLCDM]+)\s*$', re.IGNORECASE)
+RE_BAGIAN           = re.compile(r'^Bagian\s+(.+)', re.IGNORECASE)
+RE_PARAGRAF         = re.compile(r'^Paragraf\s+(\d+)', re.IGNORECASE)
 RE_LAMPIRAN_STANDALONE = re.compile(
     r'^LAMPIRAN\s*(?:[IVXLCDM]+|\d+|[A-Z])?\s*$',
     re.IGNORECASE,
@@ -228,7 +230,7 @@ def parse_regulasi(lines: list[str], reg: Regulasi) -> None:
             flush_pasal(current_pasal, current_ayat, reg)
             current_pasal = None
             current_ayat = None
-            print(f"  → Stop di baris: '{line}' (deteksi lampiran)")
+            print(f"  → Stop di: '{line}' (lampiran)")
             break
 
         # ── BAB ──
@@ -264,7 +266,7 @@ def parse_regulasi(lines: list[str], reg: Regulasi) -> None:
             nomor, sisa = pasal_result
             in_konsideran = False
 
-            # Duplikat nomor → kemungkinan referensi yang lolos filter, jadikan teks biasa
+            # Duplikat → referensi yang lolos filter, jadikan teks biasa
             if nomor in seen_pasal:
                 if current_pasal:
                     if current_ayat:
@@ -283,7 +285,7 @@ def parse_regulasi(lines: list[str], reg: Regulasi) -> None:
             i += 1
             continue
 
-        # ── Konsideran (sebelum Pasal 1) ──
+        # ── Konsideran ──
         if in_konsideran:
             reg.konsideran.append(line)
             i += 1
@@ -293,7 +295,7 @@ def parse_regulasi(lines: list[str], reg: Regulasi) -> None:
             i += 1
             continue
 
-        # ── AYAT: (1), (2), ... ──
+        # ── AYAT ──
         m_ayat = RE_AYAT.match(line)
         if m_ayat:
             if current_ayat:
@@ -302,7 +304,7 @@ def parse_regulasi(lines: list[str], reg: Regulasi) -> None:
             i += 1
             continue
 
-        # ── HURUF: a., b., ... ──
+        # ── HURUF ──
         m_huruf = RE_HURUF.match(line)
         if m_huruf:
             huruf_obj = Huruf(kode=m_huruf.group(1), teks=m_huruf.group(2).strip())
@@ -313,7 +315,7 @@ def parse_regulasi(lines: list[str], reg: Regulasi) -> None:
             i += 1
             continue
 
-        # ── ANGKA: 1., 2., ... (list definisi Pasal 1) ──
+        # ── ANGKA (list definisi) ──
         m_angka = RE_ANGKA.match(line)
         if m_angka:
             if current_ayat:
@@ -331,9 +333,20 @@ def parse_regulasi(lines: list[str], reg: Regulasi) -> None:
 
         i += 1
 
-    # Simpan pasal terakhir jika parser tidak di-stop oleh lampiran
+    # Simpan pasal terakhir jika tidak di-stop lampiran
     if current_pasal is not None:
         flush_pasal(current_pasal, current_ayat, reg)
+
+
+# ── Slug helper ───────────────────────────────────────────────────────────────
+def pasal_slug(nomor: str) -> str:
+    """Buat slug zero-padded: '5' → 'pasal-005', '1A' → 'pasal-001a'."""
+    digits = re.sub(r'[^0-9]', '', nomor)
+    suffix = re.sub(r'[0-9]', '', nomor).lower()
+    try:
+        return f"pasal-{int(digits):03d}{suffix}"
+    except ValueError:
+        return f"pasal-{nomor.lower()}"
 
 
 # ── Generate Markdown ─────────────────────────────────────────────────────────
@@ -347,14 +360,17 @@ def render_bunyi_pasal(pasal: Pasal) -> str:
         if ayat.teks:
             parts.append(f"**({ayat.nomor})** {ayat.teks}")
         for huruf in ayat.huruf:
-            parts.append(f"&nbsp;&nbsp;&nbsp;&nbsp;**{huruf.kode}.** {huruf.teks}")
+            # Nested blockquote untuk indent huruf — kompatibel Obsidian mobile
+            parts.append(f"> **{huruf.kode}.** {huruf.teks}")
         parts.append("")
 
     raw = "\n".join(parts).strip()
+    # Wrap dalam blockquote; baris yang sudah '> ...' tetap valid sebagai nested
     return "\n".join(f"> {baris}" if baris else ">" for baris in raw.split("\n"))
 
 
 def generate_pasal_md(pasal: Pasal, reg: Regulasi) -> str:
+    slug = pasal_slug(pasal.nomor)
     fm_extras = "\n".join(filter(None, [
         f'bab: "{pasal.bab}"' if pasal.bab else "",
         f'bagian: "{pasal.bagian}"' if pasal.bagian else "",
@@ -364,6 +380,7 @@ def generate_pasal_md(pasal: Pasal, reg: Regulasi) -> str:
 type: regulation
 regulasi: {reg.reg_id}
 pasal: {pasal.nomor}
+pasal_pad: "{slug}"
 kategori: {reg.reg_type}
 status: {reg.status}
 {fm_extras}
@@ -397,7 +414,7 @@ total_pasal: {len(reg.pasal_list)}
         if pasal.bab and pasal.bab != current_bab:
             current_bab = pasal.bab
             lines.append(f"\n### {current_bab}\n")
-        slug = f"pasal-{pasal.nomor.lower()}"
+        slug = pasal_slug(pasal.nomor)
         lines.append(f"- [[{slug}|Pasal {pasal.nomor}]]")
 
     return "\n".join(lines)
@@ -425,7 +442,7 @@ def write_debug(out_dir: Path, lines: list[str], reg: Regulasi) -> None:
         "=== DETAIL PASAL ===",
     ]
     for p in reg.pasal_list:
-        ayat_count = len(p.ayat)
+        ayat_count  = len(p.ayat)
         huruf_count = sum(len(a.huruf) for a in p.ayat)
         debug_info.append(
             f"Pasal {p.nomor:>4} | {ayat_count} ayat | {huruf_count} huruf | bab: {p.bab[:40] if p.bab else '-'}"
@@ -474,7 +491,7 @@ def main() -> None:
     write_debug(out_dir, lines, reg)
 
     for pasal in reg.pasal_list:
-        slug = f"pasal-{pasal.nomor.lower()}"
+        slug     = pasal_slug(pasal.nomor)
         md_content = generate_pasal_md(pasal, reg)
         (out_dir / f"{slug}.md").write_text(md_content, encoding="utf-8")
 
