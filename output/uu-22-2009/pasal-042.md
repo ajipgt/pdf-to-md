@@ -1,0 +1,23 @@
+---
+type: regulation
+regulasi: uu-22-2009
+pasal: 42
+pasal_pad: "pasal-042"
+kategori: undang-undang
+status: berlaku
+bab: "BAB VI JARINGAN LALU LINTAS DAN ANGKUTAN JALAN"
+bagian: "Paragraf 6"
+---
+
+# UU 22 Tahun 2009 Pasal 42
+
+## Bunyi Pasal
+
+> Ketentuan lebih lanjut mengenai fungsi, klasifikasi, tipe, penetapan lokasi, fasilitas, lingkungan kerja, pembangunan, dan pengoperasian Terminal diatur dengan peraturan pemerintah. - 25 - Fasilitas Parkir
+
+## Catatan
+
+Belum ada.
+
+---
+[[index|← Daftar Pasal]]
