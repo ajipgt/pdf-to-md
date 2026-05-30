@@ -1,0 +1,38 @@
+Terdeteksi: 33 pasal
+Range: Pasal 1 - Pasal 33
+Missing (0): []
+
+=== DETAIL PASAL ===
+Pasal    1 | 0 ayat | 0 huruf | bab: BAB I KETENTUANUMUM
+Pasal    2 | 2 ayat | 3 huruf | bab: BAB I KETENTUANUMUM
+Pasal    3 | 3 ayat | 8 huruf | bab: BAB II RUANGLINGKUPPENGUJIAN BERKALA
+Pasal    4 | 0 ayat | 0 huruf | bab: BAB II RUANGLINGKUPPENGUJIAN BERKALA
+Pasal    5 | 4 ayat | 2 huruf | bab: BAB II RUANGLINGKUPPENGUJIAN BERKALA
+Pasal    6 | 3 ayat | 2 huruf | bab: BAB II RUANGLINGKUPPENGUJIAN BERKALA
+Pasal    7 | 3 ayat | 0 huruf | bab: BAB II RUANGLINGKUPPENGUJIAN BERKALA
+Pasal    8 | 0 ayat | 0 huruf | bab: BAB II RUANGLINGKUPPENGUJIAN BERKALA
+Pasal    9 | 0 ayat | 0 huruf | bab: BAB II RUANGLINGKUPPENGUJIAN BERKALA
+Pasal   10 | 6 ayat | 35 huruf | bab: BAB III PENGUJIAN PERSYARATANTEKNIS DAN 
+Pasal   11 | 7 ayat | 52 huruf | bab: BAB III PENGUJIAN PERSYARATANTEKNIS DAN 
+Pasal   12 | 4 ayat | 11 huruf | bab: BAB III PENGUJIAN PERSYARATANTEKNIS DAN 
+Pasal   13 | 2 ayat | 0 huruf | bab: BAB III PENGUJIAN PERSYARATANTEKNIS DAN 
+Pasal   14 | 2 ayat | 6 huruf | bab: BAB IV PELAKSANAANPENGUJIAN BERKALA
+Pasal   15 | 2 ayat | 2 huruf | bab: BAB IV PELAKSANAANPENGUJIAN BERKALA
+Pasal   16 | 0 ayat | 0 huruf | bab: BAB IV PELAKSANAANPENGUJIAN BERKALA
+Pasal   17 | 2 ayat | 6 huruf | bab: BAB IV PELAKSANAANPENGUJIAN BERKALA
+Pasal   18 | 2 ayat | 0 huruf | bab: BAB IV PELAKSANAANPENGUJIAN BERKALA
+Pasal   19 | 2 ayat | 6 huruf | bab: BAB IV PELAKSANAANPENGUJIAN BERKALA
+Pasal   20 | 0 ayat | 0 huruf | bab: BAB IV PELAKSANAANPENGUJIAN BERKALA
+Pasal   21 | 3 ayat | 2 huruf | bab: BAB IV PELAKSANAANPENGUJIAN BERKALA
+Pasal   22 | 6 ayat | 4 huruf | bab: BAB IV PELAKSANAANPENGUJIAN BERKALA
+Pasal   23 | 0 ayat | 0 huruf | bab: BAB IV PELAKSANAANPENGUJIAN BERKALA
+Pasal   24 | 2 ayat | 0 huruf | bab: BAB IV PELAKSANAANPENGUJIAN BERKALA
+Pasal   25 | 2 ayat | 0 huruf | bab: BAB IV PELAKSANAANPENGUJIAN BERKALA
+Pasal   26 | 2 ayat | 0 huruf | bab: BAB IV PELAKSANAANPENGUJIAN BERKALA
+Pasal   27 | 2 ayat | 4 huruf | bab: BAB IV PELAKSANAANPENGUJIAN BERKALA
+Pasal   28 | 2 ayat | 2 huruf | bab: BAB IV PELAKSANAANPENGUJIAN BERKALA
+Pasal   29 | 2 ayat | 0 huruf | bab: BAB IV PELAKSANAANPENGUJIAN BERKALA
+Pasal   30 | 3 ayat | 0 huruf | bab: BAB IV PELAKSANAANPENGUJIAN BERKALA
+Pasal   31 | 2 ayat | 0 huruf | bab: BAB IV PELAKSANAANPENGUJIAN BERKALA
+Pasal   32 | 7 ayat | 3 huruf | bab: BAB IV PELAKSANAANPENGUJIAN BERKALA
+Pasal   33 | 4 ayat | 3 huruf | bab: BAB IV PELAKSANAANPENGUJIAN BERKALA
