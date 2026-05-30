@@ -1,0 +1,22 @@
+---
+type: regulation
+regulasi: uu222009v0
+pasal: 36
+kategori: undang-undang
+status: berlaku
+bab: "BAB VI JARINGAN LALU LINTAS DAN ANGKUTAN JALAN"
+bagian: "Paragraf 1"
+---
+
+# UU 22 2009 Pasal 36
+
+## Bunyi Pasal
+
+> Setiap Kendaraan Bermotor Umum dalam trayek wajib singgah di Terminal yang sudah ditentukan, kecuali ditetapkan lain dalam izin trayek. Penetapan Lokasi Terminal
+
+## Catatan
+
+Belum ada.
+
+---
+[[index|← Daftar Pasal]]
