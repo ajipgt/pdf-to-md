@@ -22,7 +22,8 @@ bagian: "Bagian Ketiga"
 > > **b.** barang yang diangkut sesuai dengan ruang muatan;
 > > **c.** jumlah barang yang diangkut tidak melebihi daya
 >
-> **(4)** Persyaratan teknis sebagaimana dimaksud pada ayat (2) untuk sepeda motor meliputi: tinggi muatan tidak melebihi 900 (sembilan ratus) b. milimeter dari atas tempat duduk pengemudi; dan
+> **(4)** Persyaratan teknis sebagaimana dimaksud pada ayat (2) untuk sepeda motor meliputi: tinggi muatan tidak melebihi 900 (sembilan ratus):
+>> **b.** milimeter dari atas tempat duduk pengemudi; dan
 > > **a.** muatan memiliki lebar tidak melebihi stang kemudi;
 > > **c.** barang muatan ditempatkan di belakang pengemudi.
 
