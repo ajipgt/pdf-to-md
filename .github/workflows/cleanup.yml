@@ -1,0 +1,52 @@
+name: Cleanup Markdown Regulasi
+
+on:
+  workflow_dispatch:
+    inputs:
+      reg_id:
+        description: 'ID regulasi (contoh: pm-19-2021), kosongkan untuk semua'
+        required: false
+  workflow_run:
+    workflows: ["PDF Regulasi to Markdown (Google Drive)"]
+    types:
+      - completed
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    # Kalau dipicu workflow_run, hanya jalan jika extract sukses
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.conclusion == 'success'
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # Pull latest karena extract workflow baru saja push
+          ref: main
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run cleanup
+        run: python scripts/cleanup_md.py
+        env:
+          REG_ID: ${{ github.event.inputs.reg_id }}
+
+      - name: Commit hasil cleanup
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add output/
+          if git diff --staged --quiet; then
+            echo "Tidak ada perubahan"
+          else
+            git commit -m "chore: cleanup MD formatting${REG_ID:+ ($REG_ID)} [skip ci]"
+            git push
+          fi
+        env:
+          REG_ID: ${{ github.event.inputs.reg_id }}
