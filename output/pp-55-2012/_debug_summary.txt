@@ -1,0 +1,193 @@
+Terdeteksi: 188 pasal
+Range: Pasal 1 - Pasal 188
+Missing (0): []
+
+=== DETAIL PASAL ===
+Pasal    1 | 0 ayat | 0 huruf | bab: BAB I KETENTUAN UMUM
+Pasal    2 | 0 ayat | 0 huruf | bab: BAB II JENIS DAN FUNGSI KENDARAAN
+Pasal    3 | 2 ayat | 5 huruf | bab: BAB II JENIS DAN FUNGSI KENDARAAN
+Pasal    4 | 0 ayat | 0 huruf | bab: BAB II JENIS DAN FUNGSI KENDARAAN
+Pasal    5 | 7 ayat | 23 huruf | bab: BAB II JENIS DAN FUNGSI KENDARAAN
+Pasal    6 | 2 ayat | 9 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal    7 | 0 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal    8 | 2 ayat | 4 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal    9 | 3 ayat | 3 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   10 | 2 ayat | 2 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   11 | 0 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   12 | 4 ayat | 8 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   13 | 3 ayat | 3 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   14 | 6 ayat | 7 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   15 | 3 ayat | 8 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   16 | 5 ayat | 2 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   17 | 0 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   18 | 3 ayat | 4 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   19 | 2 ayat | 2 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   20 | 0 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   21 | 0 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   22 | 0 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   23 | 0 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   24 | 3 ayat | 4 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   25 | 2 ayat | 5 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   26 | 3 ayat | 3 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   27 | 2 ayat | 6 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   28 | 2 ayat | 3 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   29 | 0 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   30 | 0 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   31 | 0 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   32 | 2 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   33 | 5 ayat | 4 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   34 | 2 ayat | 5 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   35 | 0 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   36 | 3 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   37 | 0 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   38 | 2 ayat | 3 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   39 | 0 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   40 | 2 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   41 | 2 ayat | 2 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   42 | 0 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   43 | 0 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   44 | 8 ayat | 7 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   45 | 0 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   46 | 2 ayat | 4 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   47 | 2 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   48 | 2 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   49 | 0 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   50 | 0 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   51 | 2 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   52 | 0 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   53 | 0 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   54 | 5 ayat | 5 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   55 | 5 ayat | 6 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   56 | 0 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   57 | 3 ayat | 6 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   58 | 11 ayat | 18 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   59 | 0 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   60 | 0 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   61 | 7 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   62 | 3 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   63 | 0 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   64 | 3 ayat | 11 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   65 | 4 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   66 | 4 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   67 | 2 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   68 | 1 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   69 | 0 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   70 | 0 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   71 | 3 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   72 | 3 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   73 | 0 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   74 | 2 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   75 | 0 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   76 | 3 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   77 | 4 ayat | 4 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   78 | 0 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   79 | 0 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   80 | 0 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   81 | 5 ayat | 2 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   82 | 2 ayat | 2 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   83 | 7 ayat | 11 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   84 | 2 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   85 | 0 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   86 | 2 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   87 | 3 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   88 | 2 ayat | 2 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   89 | 2 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   90 | 0 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   91 | 0 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   92 | 0 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   93 | 2 ayat | 0 huruf | bab: BAB III PERSYARATAN TEKNIS DAN LAIK JALA
+Pasal   94 | 0 ayat | 0 huruf | bab: BAB IV PERSYARATAN TEKNIS DAN LAIK JALAN
+Pasal   95 | 4 ayat | 0 huruf | bab: BAB IV PERSYARATAN TEKNIS DAN LAIK JALAN
+Pasal   96 | 0 ayat | 0 huruf | bab: BAB IV PERSYARATAN TEKNIS DAN LAIK JALAN
+Pasal   97 | 2 ayat | 0 huruf | bab: BAB IV PERSYARATAN TEKNIS DAN LAIK JALAN
+Pasal   98 | 3 ayat | 0 huruf | bab: BAB IV PERSYARATAN TEKNIS DAN LAIK JALAN
+Pasal   99 | 0 ayat | 0 huruf | bab: BAB IV PERSYARATAN TEKNIS DAN LAIK JALAN
+Pasal  100 | 0 ayat | 0 huruf | bab: BAB IV PERSYARATAN TEKNIS DAN LAIK JALAN
+Pasal  101 | 2 ayat | 0 huruf | bab: BAB IV PERSYARATAN TEKNIS DAN LAIK JALAN
+Pasal  102 | 5 ayat | 0 huruf | bab: BAB IV PERSYARATAN TEKNIS DAN LAIK JALAN
+Pasal  103 | 0 ayat | 0 huruf | bab: BAB IV PERSYARATAN TEKNIS DAN LAIK JALAN
+Pasal  104 | 0 ayat | 0 huruf | bab: BAB IV PERSYARATAN TEKNIS DAN LAIK JALAN
+Pasal  105 | 3 ayat | 0 huruf | bab: BAB IV PERSYARATAN TEKNIS DAN LAIK JALAN
+Pasal  106 | 0 ayat | 0 huruf | bab: BAB IV PERSYARATAN TEKNIS DAN LAIK JALAN
+Pasal  107 | 5 ayat | 0 huruf | bab: BAB IV PERSYARATAN TEKNIS DAN LAIK JALAN
+Pasal  108 | 2 ayat | 0 huruf | bab: BAB IV PERSYARATAN TEKNIS DAN LAIK JALAN
+Pasal  109 | 2 ayat | 3 huruf | bab: BAB IV PERSYARATAN TEKNIS DAN LAIK JALAN
+Pasal  110 | 5 ayat | 2 huruf | bab: BAB IV PERSYARATAN TEKNIS DAN LAIK JALAN
+Pasal  111 | 3 ayat | 0 huruf | bab: BAB IV PERSYARATAN TEKNIS DAN LAIK JALAN
+Pasal  112 | 3 ayat | 0 huruf | bab: BAB IV PERSYARATAN TEKNIS DAN LAIK JALAN
+Pasal  113 | 3 ayat | 0 huruf | bab: BAB IV PERSYARATAN TEKNIS DAN LAIK JALAN
+Pasal  114 | 2 ayat | 3 huruf | bab: BAB V KENDARAAN TIDAK BERMOTOR
+Pasal  115 | 5 ayat | 7 huruf | bab: BAB V KENDARAAN TIDAK BERMOTOR
+Pasal  116 | 6 ayat | 8 huruf | bab: BAB V KENDARAAN TIDAK BERMOTOR
+Pasal  117 | 2 ayat | 3 huruf | bab: BAB V KENDARAAN TIDAK BERMOTOR
+Pasal  118 | 3 ayat | 4 huruf | bab: BAB V KENDARAAN TIDAK BERMOTOR
+Pasal  119 | 2 ayat | 0 huruf | bab: BAB V KENDARAAN TIDAK BERMOTOR
+Pasal  120 | 0 ayat | 0 huruf | bab: BAB V KENDARAAN TIDAK BERMOTOR
+Pasal  121 | 5 ayat | 6 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  122 | 2 ayat | 2 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  123 | 4 ayat | 3 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  124 | 7 ayat | 59 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  125 | 3 ayat | 28 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  126 | 0 ayat | 0 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  127 | 3 ayat | 6 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  128 | 7 ayat | 0 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  129 | 3 ayat | 20 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  130 | 0 ayat | 0 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  131 | 0 ayat | 0 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  132 | 9 ayat | 49 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  133 | 4 ayat | 0 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  134 | 4 ayat | 0 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  135 | 2 ayat | 0 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  136 | 5 ayat | 0 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  137 | 8 ayat | 2 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  138 | 2 ayat | 0 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  139 | 0 ayat | 0 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  140 | 7 ayat | 0 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  141 | 3 ayat | 33 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  142 | 2 ayat | 21 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  143 | 5 ayat | 8 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  144 | 2 ayat | 0 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  145 | 3 ayat | 19 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  146 | 4 ayat | 0 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  147 | 3 ayat | 0 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  148 | 0 ayat | 0 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  149 | 5 ayat | 36 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  150 | 2 ayat | 11 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  151 | 0 ayat | 0 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  152 | 5 ayat | 0 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  153 | 5 ayat | 4 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  154 | 2 ayat | 0 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  155 | 2 ayat | 22 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  156 | 4 ayat | 5 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  157 | 0 ayat | 0 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  158 | 8 ayat | 11 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  159 | 0 ayat | 0 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  160 | 0 ayat | 0 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  161 | 3 ayat | 6 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  162 | 0 ayat | 0 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  163 | 0 ayat | 0 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  164 | 4 ayat | 13 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  165 | 2 ayat | 0 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  166 | 4 ayat | 0 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  167 | 6 ayat | 0 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  168 | 3 ayat | 0 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  169 | 5 ayat | 0 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  170 | 0 ayat | 0 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  171 | 0 ayat | 0 huruf | bab: BAB VI PENGUJIAN KENDARAAN BERMOTOR
+Pasal  172 | 7 ayat | 3 huruf | bab: BAB VII BENGKEL UMUM KENDARAAN BERMOTOR
+Pasal  173 | 4 ayat | 2 huruf | bab: BAB VII BENGKEL UMUM KENDARAAN BERMOTOR
+Pasal  174 | 4 ayat | 3 huruf | bab: BAB VII BENGKEL UMUM KENDARAAN BERMOTOR
+Pasal  175 | 2 ayat | 2 huruf | bab: BAB VIII SANKSI ADMINISTRATIF
+Pasal  176 | 2 ayat | 0 huruf | bab: BAB VIII SANKSI ADMINISTRATIF
+Pasal  177 | 3 ayat | 3 huruf | bab: BAB VIII SANKSI ADMINISTRATIF
+Pasal  178 | 4 ayat | 0 huruf | bab: BAB VIII SANKSI ADMINISTRATIF
+Pasal  179 | 2 ayat | 4 huruf | bab: BAB VIII SANKSI ADMINISTRATIF
+Pasal  180 | 5 ayat | 0 huruf | bab: BAB VIII SANKSI ADMINISTRATIF
+Pasal  181 | 0 ayat | 0 huruf | bab: BAB VIII SANKSI ADMINISTRATIF
+Pasal  182 | 0 ayat | 0 huruf | bab: BAB VIII SANKSI ADMINISTRATIF
+Pasal  183 | 0 ayat | 0 huruf | bab: BAB IX KETENTUAN PERALIHAN
+Pasal  184 | 0 ayat | 0 huruf | bab: BAB IX KETENTUAN PERALIHAN
+Pasal  185 | 0 ayat | 0 huruf | bab: BAB IX KETENTUAN PERALIHAN
+Pasal  186 | 0 ayat | 0 huruf | bab: BAB X KETENTUAN PENUTUP
+Pasal  187 | 0 ayat | 0 huruf | bab: BAB X KETENTUAN PENUTUP
+Pasal  188 | 0 ayat | 0 huruf | bab: BAB X KETENTUAN PENUTUP
