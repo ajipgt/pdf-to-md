@@ -1,0 +1,105 @@
+name: Ingest Regulasi PDF to CF Vectorize
+
+on:
+  workflow_dispatch:
+    inputs:
+      file_id:
+        description: 'Google Drive File ID (dari URL: /d/FILE_ID/)'
+        required: true
+        type: string
+      reg_id:
+        description: 'ID regulasi (contoh: pp-55-2012)'
+        required: true
+        type: string
+      reg_title:
+        description: 'Judul regulasi (contoh: PP 55 Tahun 2012)'
+        required: true
+        type: string
+      reg_type:
+        description: 'Tipe regulasi'
+        required: true
+        default: 'peraturan-pemerintah'
+        type: choice
+        options:
+          - peraturan-pemerintah
+          - undang-undang
+          - peraturan-menteri
+          - peraturan-daerah
+          - peraturan-bupati
+          - peraturan-walikota
+          - keputusan-menteri
+      reg_status:
+        description: 'Status regulasi'
+        required: true
+        default: 'berlaku'
+        type: choice
+        options:
+          - berlaku
+          - dicabut
+          - diubah
+
+jobs:
+  ingest_pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python Environment
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Cache Pip Dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install Pipeline Dependencies
+        run: |
+          pip install \
+            pdfplumber \
+            pymupdf \
+            google-api-python-client \
+            google-auth \
+            requests \
+            tqdm
+
+      - name: Inject Google Drive Service Account Key
+        run: |
+          echo '${{ secrets.GDRIVE_SA_KEY }}' > /tmp/sa_key.json
+
+      - name: Run AI-Optimized Ingest Script
+        run: python scripts/ingest.py
+        env:
+          GDRIVE_FILE_ID: ${{ github.event.inputs.file_id }}
+          REG_ID: ${{ github.event.inputs.reg_id }}
+          REG_TITLE: ${{ github.event.inputs.reg_title }}
+          REG_TYPE: ${{ github.event.inputs.reg_type }}
+          REG_STATUS: ${{ github.event.inputs.reg_status }}
+          WORKER_URL: ${{ secrets.CF_WORKER_URL }}
+          AUTH_TOKEN: ${{ secrets.CF_WORKER_TOKEN }}
+          GOOGLE_APPLICATION_CREDENTIALS: /tmp/sa_key.json
+
+      - name: Secure Cleanup Credentials
+        if: always()
+        run: rm -f /tmp/sa_key.json
+
+      - name: Execution Summary
+        if: success()
+        run: |
+          echo "## ✅ Ingest ke Cloudflare Vectorize Berhasil" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Parameter | Informasi Regulasi |" >> $GITHUB_STEP_SUMMARY
+          echo "|-----|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| **Judul Regulasi** | ${{ github.event.inputs.reg_title }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| **ID Registrasi** | \`${{ github.event.inputs.reg_id }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Tipe Dokumen** | ${{ github.event.inputs.reg_type }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Status Pengujian** | ${{ github.event.inputs.reg_status }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Target Endpoint** | \`${{ secrets.CF_WORKER_URL }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Data telah diurai berbasis hierarki hukum dan disuntikkan konteks semantik penuh agar optimal dibaca oleh Meta Llama." >> $GITHUB_STEP_SUMMARY
