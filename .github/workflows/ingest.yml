@@ -83,6 +83,8 @@ jobs:
           REG_STATUS: ${{ github.event.inputs.reg_status }}
           WORKER_URL: ${{ secrets.CF_WORKER_URL }}
           AUTH_TOKEN: ${{ secrets.CF_WORKER_TOKEN }}
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+          CF_API_KEY: ${{ secrets.CF_API_KEY }}
           GOOGLE_APPLICATION_CREDENTIALS: /tmp/sa_key.json
 
       - name: Secure Cleanup Credentials
@@ -100,6 +102,5 @@ jobs:
           echo "| **ID Registrasi** | \`${{ github.event.inputs.reg_id }}\` |" >> $GITHUB_STEP_SUMMARY
           echo "| **Tipe Dokumen** | ${{ github.event.inputs.reg_type }} |" >> $GITHUB_STEP_SUMMARY
           echo "| **Status Pengujian** | ${{ github.event.inputs.reg_status }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| **Target Endpoint** | \`${{ secrets.CF_WORKER_URL }}\` |" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "Data telah diurai berbasis hierarki hukum dan disuntikkan konteks semantik penuh agar optimal dibaca oleh Meta Llama." >> $GITHUB_STEP_SUMMARY
+          echo "Data telah didekonstruksi, diredistribusi berbasis hierarki semantik, dan dikirim bersama otentikasi Cloudflare Account ID & API Key." >> $GITHUB_STEP_SUMMARY
