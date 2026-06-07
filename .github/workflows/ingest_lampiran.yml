@@ -1,0 +1,74 @@
+name: Ingest Lampiran PDF to CF Vectorize
+
+on:
+  workflow_dispatch:
+    inputs:
+      gdrive_url:
+        description: 'Link/URL Google Drive PDF Regulasi'
+        required: true
+        type: string
+      reg_id:
+        description: 'ID unik regulasi (contoh: pm-25-2024 atau pp-55-2012)'
+        required: true
+        type: string
+
+jobs:
+  ingest_lampiran_pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python Environment
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Cache Pip Dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      - name: Install Pipeline Dependencies
+        run: |
+          pip install \
+            pdfplumber \
+            pymupdf \
+            google-api-python-client \
+            google-auth \
+            requests \
+            tqdm
+
+      - name: Inject Google Drive Service Account Key
+        run: |
+          echo '${{ secrets.GDRIVE_SA_KEY }}' > /tmp/sa_key.json
+
+      - name: Run AI-Optimized Lampiran Script
+        run: python scripts/ingest_lampiran.py
+        env:
+          GDRIVE_URL: ${{ github.event.inputs.gdrive_url }}
+          REG_ID: ${{ github.event.inputs.reg_id }}
+          WORKER_URL: ${{ secrets.CF_WORKER_URL }}
+          AUTH_TOKEN: ${{ secrets.CF_WORKER_TOKEN }}
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+          CF_API_KEY: ${{ secrets.CF_API_KEY }}
+          GOOGLE_APPLICATION_CREDENTIALS: /tmp/sa_key.json
+
+      - name: Secure Cleanup Credentials
+        if: always()
+        run: rm -f /tmp/sa_key.json
+
+      - name: Execution Summary
+        if: success()
+        run: |
+          echo "## ✅ Ingest LAMPIRAN Regulasi Berhasil" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Parameter | Informasi |" >> $GITHUB_STEP_SUMMARY
+          echo "|-----|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| **ID Regulasi** | \`${{ github.event.inputs.reg_id }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Fokus Data** | Murni Dokumen Lampiran Teknis |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Sumber URL** | ${{ github.event.inputs.gdrive_url }} |" >> $GITHUB_STEP_SUMMARY
