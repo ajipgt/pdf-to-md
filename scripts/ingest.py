@@ -23,6 +23,8 @@ REG_TYPE    = os.environ.get("REG_TYPE", "").strip()
 REG_STATUS  = os.environ.get("REG_STATUS", "berlaku").strip()
 WORKER_URL  = os.environ.get("WORKER_URL", "").strip()
 AUTH_TOKEN  = os.environ.get("AUTH_TOKEN", "").strip()
+CF_ACCOUNT_ID = os.environ.get("CF_ACCOUNT_ID", "").strip()
+CF_API_KEY    = os.environ.get("CF_API_KEY", "").strip()
 SA_KEY_PATH = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS", "/tmp/sa_key.json")
 
 BATCH_SIZE  = 50
@@ -59,7 +61,6 @@ RE_REFERENSI_PASAL   = re.compile(r'(?:dalam|dimaksud|sebagaimana|ketentuan|berl
 RE_AYAT              = re.compile(r'^\((\d+)\)\s*(.*)')
 RE_HURUF             = re.compile(r'^([a-z])\.\s+(.*)')
 RE_ANGKA             = re.compile(r'^(\d+)\.\s+(.*)')
-# Deteksi Romawi untuk Bab yang lebih bersih
 RE_BAB               = re.compile(r'^BAB\s+([IVXLCDM]+)\s*$', re.IGNORECASE)
 RE_BAGIAN            = re.compile(r'^Bagian\s+(.+)', re.IGNORECASE)
 RE_PARAGRAF          = re.compile(r'^Paragraf\s+(\d+)', re.IGNORECASE)
@@ -188,9 +189,9 @@ def flush_pasal(current_pasal: Pasal | None, current_ayat: Ayat | None, reg: Reg
         return
     if current_ayat:
         if not current_ayat.huruf:
-            teks_bersih, huruf_inline = split_inline_huruf(current_ayat.teks)
+            teks_original, huruf_inline = split_inline_huruf(current_ayat.teks)
             if huruf_inline:
-                current_ayat.teks = teks_bersih
+                current_ayat.teks = teks_original
                 current_ayat.huruf = huruf_inline
         current_pasal.ayat.append(current_ayat)
     reg.pasal_list.append(current_pasal)
@@ -262,9 +263,9 @@ def parse_regulasi(lines: list[str], reg: Regulasi) -> None:
         if m_ayat:
             if current_ayat:
                 if not current_ayat.huruf:
-                    teks_bersih, huruf_inline = split_inline_huruf(current_ayat.teks)
+                    teks_original, huruf_inline = split_inline_huruf(current_ayat.teks)
                     if huruf_inline:
-                        current_ayat.teks = teks_bersih
+                        current_ayat.teks = teks_original
                         current_ayat.huruf = huruf_inline
                 current_pasal.ayat.append(current_ayat)
             current_ayat = Ayat(nomor=m_ayat.group(1), teks=m_ayat.group(2).strip())
@@ -304,25 +305,21 @@ def parse_regulasi(lines: list[str], reg: Regulasi) -> None:
 def build_ai_optimized_text(pasal: Pasal, reg: Regulasi) -> str:
     """
     Menyusun ulang teks regulasi mentah menjadi format injeksi konteks penuh (High-Fidelity Context).
-    Setiap sub-bagian (ayat/huruf) akan membawa nama regulasi, bab, dan nomor pasal
-    agar pemodelan vektor (Embedding) AI menangkap relasi data secara mutlak.
+    Setiap sub-bagian (ayat/huruf) membawa metadata lengkap agar Meta Llama tidak kehilangan arah context.
     """
     ai_chunks = []
     
-    # Header Konteks Konstan untuk bagian atas payload
     meta_header = f"DOKUMEN: {reg.title}\nID REGULASI: {reg.reg_id}\nTIPE: {reg.reg_type.upper()}"
     if pasal.bab:
         meta_header += f"\nHIRARKI: {pasal.bab}"
     if pasal.bagian:
         meta_header += f" > {pasal.bagian}"
 
-    # 1. Jika ada teks langsung di bawah Judul Pasal
     if pasal.teks_langsung:
         teks_isi = " ".join(pasal.teks_langsung)
         block = f"{meta_header}\nLOKASI: Pasal {pasal.nomor}\n\nISI KETENTUAN:\nPasal {pasal.nomor}\n{teks_isi}"
         ai_chunks.append(block)
         
-    # 2. Iterasi per Ayat dan Huruf di dalamnya
     for ayat in pasal.ayat:
         if ayat.teks:
             ayat_chunk = (
@@ -332,8 +329,6 @@ def build_ai_optimized_text(pasal: Pasal, reg: Regulasi) -> str:
             ai_chunks.append(ayat_chunk)
             
         for h in ayat.huruf:
-            # OPTIMASI TERTINGGI AI: Suntikkan teks induk ayat ke dalam huruf
-            # Ini mencegah AI kehilangan konteks dari kalimat pengantar di induk ayat.
             induk_teks = f" ({ayat.teks})" if ayat.teks else ""
             huruf_chunk = (
                 f"{meta_header}\nLOKASI: Pasal {pasal.nomor} Ayat ({ayat.nomor}) Huruf {h.kode}.\n\n"
@@ -341,14 +336,13 @@ def build_ai_optimized_text(pasal: Pasal, reg: Regulasi) -> str:
             )
             ai_chunks.append(huruf_chunk)
             
-    # Gabungkan semua sub-konteks pasal dengan delimiter Markdown bersih untuk dibaca AI
     return "\n\n---\n\n".join(ai_chunks)
 
 
-# ── Transmisi Data Ke Cloudflare Vectorize Worker ────────────────────────────
+# ── Transmisi Data Ke Cloudflare Worker (Dengan Account ID & API Key) ────────
 def transmit_to_worker(chunks: list[dict]) -> bool:
     if not WORKER_URL:
-        print("[!] ERROR: WORKER_URL tidak dikonfigurasi di repositori.")
+        print("[!] ERROR: WORKER_URL tidak ditemukan di lingkungan Actions.")
         return False
         
     headers = {"Content-Type": "application/json"}
@@ -356,53 +350,57 @@ def transmit_to_worker(chunks: list[dict]) -> bool:
         headers["Authorization"] = f"Bearer {AUTH_TOKEN}"
         
     url = f"{WORKER_URL.rstrip('/')}/api/ingest"
-    print(f"[*] Mengirim {len(chunks)} data payload optimal AI ke Vectorize Worker...")
+    print(f"[*] Mengirim {len(chunks)} data pasal teroptimasi ke Worker Endpoint...")
+    
+    # Bungkus paket data bersama Kredensial Langsung Cloudflare yang diwajibkan Worker Anda
+    payload = {
+        "account_id": CF_ACCOUNT_ID,
+        "api_key": CF_API_KEY,
+        "chunks": chunks
+    }
     
     try:
-        response = requests.post(url, headers=headers, data=json.dumps({"chunks": chunks}), timeout=60)
+        response = requests.post(url, headers=headers, data=json.dumps(payload), timeout=60)
         response.raise_for_status()
         res_data = response.json()
-        print(f"[+] Transmisi Sukses! Terbuat/Dimasukkan: {res_data.get('inserted', 0)} chunk.")
+        print(f"[+] Transmisi Sukses! Data dimasukkan: {res_data.get('inserted', 0)} chunk.")
         return True
     except Exception as e:
-        print(f"[!] ERROR: Gagal melakukan pengiriman data ke Worker: {e}")
+        print(f"[!] ERROR: Gagal mengirimkan data ke Worker: {e}")
         return False
 
 
 # ── Main Pipeline ─────────────────────────────────────────────────────────────
 def main() -> None:
     if not FILE_ID or not REG_ID:
-        print("[!] ERROR: Input parameter lingkungan Github Actions tidak lengkap.")
+        print("[!] ERROR: Variabel wajib (GDRIVE_FILE_ID / REG_ID) masih kosong.")
         sys.exit(1)
         
-    # Ambil berkas asli dari Drive
+    # Ambil berkas dari Drive
     pdf_bytes = download_gdrive_pdf(FILE_ID)
     
-    # Ekstraksi baris
+    # Ekstraksi baris teks aktif
     lines = extract_raw_lines(pdf_bytes)
-    print(f"    Terdeteksi sebanyak {len(lines)} baris teks aktif.")
+    print(f"    Terbaca sebanyak {len(lines)} baris aktif.")
     
-    # Jalankan parser penataan hierarki hukum Indonesia milik Anda
+    # Jalankan parser hierarki regulasi Indonesia
     reg = Regulasi(reg_id=REG_ID, title=REG_TITLE or REG_ID.upper(), reg_type=REG_TYPE, status=REG_STATUS)
     parse_regulasi(lines, reg)
-    print(f"[+] Proses parsing selesai: {len(reg.pasal_list)} pasal berhasil dipetakan.")
+    print(f"[+] Parsing Sukses: {len(reg.pasal_list)} pasal berhasil diisolasi.")
     
     if not reg.pasal_list:
-        print("[!] ERROR: Dokumen kosong atau tidak ada pola pasal yang berhasil diurai.")
+        print("[!] ERROR: Gagal memetakan struktur regulasi hukum.")
         sys.exit(1)
         
-    # Bangun Payload Teroptimasi AI
+    # Pembuatan Payload Berstruktur Tinggi untuk Llama
     chunks_to_send = []
     for pasal in reg.pasal_list:
-        # Panggil fungsi injeksi konteks semantik AI
         ai_enriched_payload = build_ai_optimized_text(pasal, reg)
-        
-        # Penomoran berkas id hash unik berbasis isi teks pasal
         chunk_id = hashlib.md5(f"{REG_ID}:pasal-{pasal.nomor}".encode()).hexdigest()[:16]
         
         chunks_to_send.append({
             "id": f"{REG_ID.replace('/', '-').replace(' ', '_')}_pasal-{pasal.nomor}_{chunk_id}",
-            "text": ai_enriched_payload, # Teks asli bernarasi tinggi kaya konteks
+            "text": ai_enriched_payload,
             "source": reg.title,
             "pasal": f"Pasal {pasal.nomor}",
             "reg_id": reg.reg_id,
@@ -412,7 +410,7 @@ def main() -> None:
             "bagian": pasal.bagian
         })
         
-    # Kirim data secara bertahap (batching) ke server Cloudflare
+    # Kirim data secara bertahap (batching) ke Cloudflare Worker
     success = True
     for i in range(0, len(chunks_to_send), BATCH_SIZE):
         batch = chunks_to_send[i : i + BATCH_SIZE]
@@ -420,9 +418,9 @@ def main() -> None:
             success = False
             
     if success:
-        print(f"\n[✓] PIPELINE SELESAI: {len(chunks_to_send)} Konteks Regulasi berhasil di-ingest ke Vectorize.")
+        print(f"\n[✓] PIPELINE SELESAI: {len(chunks_to_send)} Pasal regulasi berhasil dikirim ke Cloudflare.")
     else:
-        print("\n[!] Peringatan: Proses selesai dengan beberapa galat transmisi database.")
+        print("\n[!] Pipeline selesai dengan catatan beberapa chunk gagal dikirim.")
         sys.exit(1)
 
 
