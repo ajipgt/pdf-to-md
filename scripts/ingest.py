@@ -16,11 +16,8 @@ from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseDownload
 
 # ── Konfigurasi & Environment dari GitHub Actions ────────────────────────────
-FILE_ID     = os.environ.get("GDRIVE_FILE_ID", "").strip()
+GDRIVE_URL  = os.environ.get("GDRIVE_URL", "").strip()
 REG_ID      = os.environ.get("REG_ID", "").strip()
-REG_TITLE   = os.environ.get("REG_TITLE", "").strip()
-REG_TYPE    = os.environ.get("REG_TYPE", "").strip()
-REG_STATUS  = os.environ.get("REG_STATUS", "berlaku").strip()
 WORKER_URL  = os.environ.get("WORKER_URL", "").strip()
 AUTH_TOKEN  = os.environ.get("AUTH_TOKEN", "").strip()
 CF_ACCOUNT_ID = os.environ.get("CF_ACCOUNT_ID", "").strip()
@@ -29,6 +26,27 @@ SA_KEY_PATH = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS", "/tmp/sa_key.json
 
 BATCH_SIZE  = 50
 SCOPES      = ["https://www.googleapis.com/auth/drive.readonly"]
+
+
+# ── Extractor Otomatis Google Drive ID ────────────────────────────────────────
+def extract_file_id_from_url(url: str) -> str:
+    """Mengekstrak Google Drive File ID secara otomatis dari tautan URL penuh."""
+    # Pola 1: URL standar /file/d/[FILE_ID]/view atau /d/[FILE_ID]/edit
+    match_standard = re.search(r'/d/([a-zA-Z0-9-_]{25,50})', url)
+    if match_standard:
+        return match_standard.group(1)
+        
+    # Pola 2: URL berparameter query ?id=[FILE_ID]
+    match_query = re.search(r'id=([a-zA-Z0-9-_]{25,50})', url)
+    if match_query:
+        return match_query.group(1)
+        
+    # Jika input ternyata sudah berupa mentahan File ID langsung
+    if re.match(r'^[a-zA-Z0-9-_]{25,50}$', url):
+        return url
+        
+    print(f"[!] ERROR: Gagal mengekstrak File ID dari URL: {url}")
+    sys.exit(1)
 
 
 # ── Normalisasi Teks PDF ──────────────────────────────────────────────────────
@@ -92,14 +110,11 @@ class Pasal:
 class Regulasi:
     reg_id: str
     title: str
-    reg_type: str
-    status: str
     pasal_list: list[Pasal] = field(default_factory=list)
 
 
 # ── Google Drive Ingestion ────────────────────────────────────────────────────
 def download_gdrive_pdf(file_id: str) -> bytes:
-    """Mengunduh file berkas regulasi dari Google Drive API."""
     print(f"[*] Menghubungkan ke Google Drive untuk File ID: {file_id}...")
     if not os.path.exists(SA_KEY_PATH):
         print(f"[!] ERROR: Berkas Service Account tidak ditemukan di {SA_KEY_PATH}")
@@ -131,7 +146,6 @@ def download_gdrive_pdf(file_id: str) -> bytes:
 
 # ── Ekstraksi Baris Teks ──────────────────────────────────────────────────────
 def extract_raw_lines(pdf_bytes: bytes) -> list[str]:
-    """Mengekstrak baris dokumen menggunakan pdfplumber dengan fallback PyMuPDF."""
     lines: list[str] = []
     try:
         with pdfplumber.open(io.BytesIO(pdf_bytes)) as pdf:
@@ -303,13 +317,8 @@ def parse_regulasi(lines: list[str], reg: Regulasi) -> None:
 
 # ── OPTIMASI AI: Pembangunan Teks Kaya Konteks Semantik ──────────────────────
 def build_ai_optimized_text(pasal: Pasal, reg: Regulasi) -> str:
-    """
-    Menyusun ulang teks regulasi mentah menjadi format injeksi konteks penuh (High-Fidelity Context).
-    Setiap sub-bagian (ayat/huruf) membawa metadata lengkap agar Meta Llama tidak kehilangan arah context.
-    """
     ai_chunks = []
-    
-    meta_header = f"DOKUMEN: {reg.title}\nID REGULASI: {reg.reg_id}\nTIPE: {reg.reg_type.upper()}"
+    meta_header = f"DOKUMEN: {reg.title}\nID REGULASI: {reg.reg_id}"
     if pasal.bab:
         meta_header += f"\nHIRARKI: {pasal.bab}"
     if pasal.bagian:
@@ -339,7 +348,7 @@ def build_ai_optimized_text(pasal: Pasal, reg: Regulasi) -> str:
     return "\n\n---\n\n".join(ai_chunks)
 
 
-# ── Transmisi Data Ke Cloudflare Worker (Dengan Account ID & API Key) ────────
+# ── Transmisi Data Ke Cloudflare Worker ──────────────────────────────────────
 def transmit_to_worker(chunks: list[dict]) -> bool:
     if not WORKER_URL:
         print("[!] ERROR: WORKER_URL tidak ditemukan di lingkungan Actions.")
@@ -352,7 +361,6 @@ def transmit_to_worker(chunks: list[dict]) -> bool:
     url = f"{WORKER_URL.rstrip('/')}/api/ingest"
     print(f"[*] Mengirim {len(chunks)} data pasal teroptimasi ke Worker Endpoint...")
     
-    # Bungkus paket data bersama Kredensial Langsung Cloudflare yang diwajibkan Worker Anda
     payload = {
         "account_id": CF_ACCOUNT_ID,
         "api_key": CF_API_KEY,
@@ -372,19 +380,24 @@ def transmit_to_worker(chunks: list[dict]) -> bool:
 
 # ── Main Pipeline ─────────────────────────────────────────────────────────────
 def main() -> None:
-    if not FILE_ID or not REG_ID:
-        print("[!] ERROR: Variabel wajib (GDRIVE_FILE_ID / REG_ID) masih kosong.")
+    if not GDRIVE_URL or not REG_ID:
+        print("[!] ERROR: Variabel wajib (GDRIVE_URL / REG_ID) masih kosong.")
         sys.exit(1)
         
-    # Ambil berkas dari Drive
-    pdf_bytes = download_gdrive_pdf(FILE_ID)
+    # Ekstraksi otomatis File ID dari URL penuh yang di-input user
+    file_id = extract_file_id_from_url(GDRIVE_URL)
+    
+    # Ambil berkas dari Drive menggunakan File ID hasil ekstraksi
+    pdf_bytes = download_gdrive_pdf(file_id)
     
     # Ekstraksi baris teks aktif
     lines = extract_raw_lines(pdf_bytes)
     print(f"    Terbaca sebanyak {len(lines)} baris aktif.")
     
-    # Jalankan parser hierarki regulasi Indonesia
-    reg = Regulasi(reg_id=REG_ID, title=REG_TITLE or REG_ID.upper(), reg_type=REG_TYPE, status=REG_STATUS)
+    # Judul regulasi langsung di-generate otomatis dari REG_ID versi kapital (Contoh: "PP-55-2012")
+    auto_title = REG_ID.upper()
+    reg = Regulasi(reg_id=REG_ID, title=auto_title)
+    
     parse_regulasi(lines, reg)
     print(f"[+] Parsing Sukses: {len(reg.pasal_list)} pasal berhasil diisolasi.")
     
@@ -403,11 +416,7 @@ def main() -> None:
             "text": ai_enriched_payload,
             "source": reg.title,
             "pasal": f"Pasal {pasal.nomor}",
-            "reg_id": reg.reg_id,
-            "reg_type": reg.reg_type,
-            "status": reg.status,
-            "bab": pasal.bab,
-            "bagian": pasal.bagian
+            "reg_id": reg.reg_id
         })
         
     # Kirim data secara bertahap (batching) ke Cloudflare Worker
@@ -418,7 +427,7 @@ def main() -> None:
             success = False
             
     if success:
-        print(f"\n[✓] PIPELINE SELESAI: {len(chunks_to_send)} Pasal regulasi berhasil dikirim ke Cloudflare.")
+        print(f"\n[✓] PIPELINE SELESAI: {len(chunks_to_send)} Pasal regulasi [{auto_title}] berhasil dikirim.")
     else:
         print("\n[!] Pipeline selesai dengan catatan beberapa chunk gagal dikirim.")
         sys.exit(1)
