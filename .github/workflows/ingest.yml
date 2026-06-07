@@ -3,40 +3,14 @@ name: Ingest Regulasi PDF to CF Vectorize
 on:
   workflow_dispatch:
     inputs:
-      file_id:
-        description: 'Google Drive File ID (dari URL: /d/FILE_ID/)'
+      gdrive_url:
+        description: 'Link/URL Google Drive PDF Regulasi'
         required: true
         type: string
       reg_id:
-        description: 'ID regulasi (contoh: pp-55-2012)'
+        description: 'ID unik regulasi (contoh: pp-55-2012 atau uu-22-2009)'
         required: true
         type: string
-      reg_title:
-        description: 'Judul regulasi (contoh: PP 55 Tahun 2012)'
-        required: true
-        type: string
-      reg_type:
-        description: 'Tipe regulasi'
-        required: true
-        default: 'peraturan-pemerintah'
-        type: choice
-        options:
-          - peraturan-pemerintah
-          - undang-undang
-          - peraturan-menteri
-          - peraturan-daerah
-          - peraturan-bupati
-          - peraturan-walikota
-          - keputusan-menteri
-      reg_status:
-        description: 'Status regulasi'
-        required: true
-        default: 'berlaku'
-        type: choice
-        options:
-          - berlaku
-          - dicabut
-          - diubah
 
 jobs:
   ingest_pipeline:
@@ -76,11 +50,8 @@ jobs:
       - name: Run AI-Optimized Ingest Script
         run: python scripts/ingest.py
         env:
-          GDRIVE_FILE_ID: ${{ github.event.inputs.file_id }}
+          GDRIVE_URL: ${{ github.event.inputs.gdrive_url }}
           REG_ID: ${{ github.event.inputs.reg_id }}
-          REG_TITLE: ${{ github.event.inputs.reg_title }}
-          REG_TYPE: ${{ github.event.inputs.reg_type }}
-          REG_STATUS: ${{ github.event.inputs.reg_status }}
           WORKER_URL: ${{ secrets.CF_WORKER_URL }}
           AUTH_TOKEN: ${{ secrets.CF_WORKER_TOKEN }}
           CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
@@ -94,13 +65,9 @@ jobs:
       - name: Execution Summary
         if: success()
         run: |
-          echo "## ✅ Ingest ke Cloudflare Vectorize Berhasil" >> $GITHUB_STEP_SUMMARY
+          echo "## ✅ Ingest Regulasi Berhasil" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "| Parameter | Informasi Regulasi |" >> $GITHUB_STEP_SUMMARY
+          echo "| Parameter | Informasi |" >> $GITHUB_STEP_SUMMARY
           echo "|-----|-------|" >> $GITHUB_STEP_SUMMARY
-          echo "| **Judul Regulasi** | ${{ github.event.inputs.reg_title }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| **ID Registrasi** | \`${{ github.event.inputs.reg_id }}\` |" >> $GITHUB_STEP_SUMMARY
-          echo "| **Tipe Dokumen** | ${{ github.event.inputs.reg_type }} |" >> $GITHUB_STEP_SUMMARY
-          echo "| **Status Pengujian** | ${{ github.event.inputs.reg_status }} |" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "Data telah didekonstruksi, diredistribusi berbasis hierarki semantik, dan dikirim bersama otentikasi Cloudflare Account ID & API Key." >> $GITHUB_STEP_SUMMARY
+          echo "| **ID Regulasi** | \`${{ github.event.inputs.reg_id }}\` |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Sumber URL** | ${{ github.event.inputs.gdrive_url }} |" >> $GITHUB_STEP_SUMMARY
