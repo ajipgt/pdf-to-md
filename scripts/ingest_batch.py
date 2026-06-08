@@ -186,7 +186,7 @@ def run_lampiran_pipeline(mod_lamp, pdf_bytes: bytes, reg_id: str) -> tuple[bool
 
 
 # ── Transmit ke Worker ────────────────────────────────────────────────────────
-def transmit_chunks(chunks: list[dict], batch_size: int = 50) -> bool:
+def transmit_chunks(chunks: list[dict], batch_size: int = 10) -> bool:
     if not WORKER_URL:
         print("    ❌ WORKER_URL tidak ditemukan")
         return False
@@ -202,11 +202,29 @@ def transmit_chunks(chunks: list[dict], batch_size: int = 50) -> bool:
 
     for i in range(0, len(chunks), batch_size):
         batch = chunks[i : i + batch_size]
+
+        # Truncate chunk teks yang terlalu panjang — CF Worker limit ~1MB per request
+        # build_ai_optimized_text bisa sangat panjang untuk pasal dengan banyak ayat+huruf
+        for chunk in batch:
+            if len(chunk["text"]) > 8000:
+                chunk["text"] = chunk["text"][:8000] + "\n...[terpotong]"
+
         payload = {
             "account_id": CF_ACCOUNT_ID,
             "api_key": CF_API_KEY,
             "chunks": batch,
         }
+
+        payload_size = len(json.dumps(payload))
+        if payload_size > 900_000:  # 900KB safety margin
+            # Split lebih kecil lagi
+            mid = len(batch) // 2
+            ok1 = transmit_chunks(batch[:mid], batch_size=1)
+            ok2 = transmit_chunks(batch[mid:], batch_size=1)
+            if not (ok1 and ok2):
+                return False
+            continue
+
         try:
             resp = req_lib.post(url, headers=headers, data=json.dumps(payload), timeout=60)
             resp.raise_for_status()
